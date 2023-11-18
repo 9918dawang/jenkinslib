@@ -5,7 +5,7 @@ def PrintMe(content){
 }
 
 
-//格式化输出
+//格式化输出+打印信息方法ansiColor
 def PrintMes(value,color){
    colors=['red':"\033[40;31n >>>>>>>>>>>${value}<<<<<<<<< \033[0n",
           'blue':"\033[47;34n ${value} \033[0n",
