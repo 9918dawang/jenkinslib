@@ -1,0 +1,115 @@
+@Library('jenkinslib') _
+def tools = new org.devops.tools()
+
+
+String workspace = "D:\\code\\jenkinsWS"
+
+pipeline {
+	agent {
+		node {
+			label "master" //指定运行节点的标签或名称
+			customWorkspace "${workspace}"
+		}
+	}
+
+
+	options {
+		timestamps()
+		skipDefaultCheckout()
+		disableConcurrentBuilds()
+		timeout(time: 1, unit: 'HOURS')
+	}
+
+	stages {
+		//下载代码
+		stage('GetCode') { //阶段名称
+			when {
+				environment name: 'DEPLOY_ENV', value: 'staging'
+			}
+			steps {
+				timeout(time: 5, unit: "MINUTES") {
+					script {
+						println('获取代码')
+
+						mavenHome = tool "m2"
+						println(mavenHome)
+						//sh "${MVNHOME}/bin/mvn --version"
+						input id: '23124', message: 'xiaoxi', ok: 'input subtitle', parameters: [choice(choices: ['1', '2', '3', '4', '5'], name: 'choice')], submitter: 'yangwei'
+
+						//input id: 'Id1', message: '继续吗？', ok: 'yes,go on!', parameters: [choice(choices: ['1', '2', '3', '4'], name: 'choice')], submitter: 'root'
+						bat encoding: 'GB2312', label: '123', returnStatus: true, returnStdout: true, script: 'cmd'
+
+					}
+
+				}
+			}
+		}
+
+
+		stage('01') { //阶段名称
+			failFast true
+			parallel {
+				//构建
+				stage("Build") {
+					steps {
+						timeout(time: 20, unit: "MINUTES") {
+							script {
+								println('应用打包')
+                                tools.PrintMe('this is lib!')
+								mavenHome = tool "m2"
+								println(mavenHome)
+								//sh "${MVNHOME}/bin/mvn --version"
+
+
+							}
+
+						}
+					}
+				}
+
+
+				//代码扫描
+				stage('CodeScan') { //阶段名称
+					steps {
+						timeout(time: 5, unit: "MINUTES") {
+							script {
+								println('代码扫描')
+							}
+
+						}
+					}
+				}
+			}
+		}
+
+
+
+	}
+
+	post {
+		always {
+			script {
+				println("always")
+			}
+		}
+		success {
+			script {
+				currentBuild.description = "\n 构建成功！"
+			}
+		}
+		failure {
+			script {
+				currentBuild.description = "\n 构建失败！"
+			}
+		}
+		aborted {
+			script {
+				currentBuild.description = "\n 取消构建！"
+			}
+		}
+	}
+
+
+
+
+}
