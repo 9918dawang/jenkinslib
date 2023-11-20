@@ -9,7 +9,7 @@ pipeline {
 			steps {
 				timeout(time: 5, unit: "MINUTES") {
 					script {
-            mvnHome = tool "m2"
+            mvnHome = tool "M2"
             sh "${mvnHome}/bin/mvn -v"
 					}
 
