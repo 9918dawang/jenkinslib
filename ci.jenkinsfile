@@ -1,0 +1,25 @@
+pipeline {
+	agent {
+		node{label "master"}
+	}
+
+	stages {
+		//下载代码
+		stage('maven build') { //阶段名称
+			steps {
+				timeout(time: 5, unit: "MINUTES") {
+					script {
+            mvnHome = tool "m2"
+            sh "${mvnHome}/bin/mvn -v"
+					}
+
+				}
+			}
+		}
+}
+
+
+
+
+
+}
