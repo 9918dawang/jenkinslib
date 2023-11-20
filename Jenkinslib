@@ -33,12 +33,12 @@ pipeline {
 						println('获取代码')
 						tools.PrintMes('获取代码','green1')
 						mavenHome = tool "M2"
-						//println(mavenHome)
-						sh "${MVNHOME}/bin/mvn --version"
-						//input id: '23124', message: 'xiaoxi', ok: 'input subtitle', parameters: [choice(choices: ['1', '2', '3', '4', '5'], name: 'choice')], submitter: 'yangwei'
+						println(mavenHome)
+						sh "${mavenHome}/bin/mvn --version"
+						input id: '23124', message: 'xiaoxi', ok: 'input subtitle', parameters: [choice(choices: ['1', '2', '3', '4', '5'], name: 'choice')], submitter: 'yangwei'
 
-						//input id: 'Id1', message: '继续吗？', ok: 'yes,go on!', parameters: [choice(choices: ['1', '2', '3', '4'], name: 'choice')], submitter: 'root'
-						//bat encoding: 'GB2312', label: '123', returnStatus: true, returnStdout: true, script: 'cmd'
+						input id: 'Id1', message: '继续吗？', ok: 'yes,go on!', parameters: [choice(choices: ['1', '2', '3', '4'], name: 'choice')], submitter: 'root'
+						bat encoding: 'GB2312', label: '123', returnStatus: true, returnStdout: true, script: 'cmd'
 
 					}
 
