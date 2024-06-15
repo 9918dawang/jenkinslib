@@ -12,7 +12,8 @@ pipeline {
 	string build = "${env.mavenBuild}"
             mvnHome = tool "M2"
 		print(mvnHome)
-           bat "${mvnHome}/bin/mvn ${build}"
+          // bat "${mvnHome}/bin/mvn ${build}"
+bat "C:\ProgramData\Jenkins\.jenkins\workspace\demo-mavenci-service\mvn ${build}"
 					}
 
 				}
